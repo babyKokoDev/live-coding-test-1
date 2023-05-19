@@ -38,50 +38,43 @@
               itemImage : imgAddress.value,
               category : Category.value
         }
+         if (itemName.value == "" || price.value == "" || imgAddress.value == "" || Category.value == ""){
+          alert("Fill up all the information required")
+         }else {
+          allItems.push(newObject)
+            localStorage.setItem("users", JSON.stringify(allItems))
+            itemName.value = ""
+            price.value = ""
+            imgAddress.value = ""
+            Category.value = ""
 
-        allItems.push(newObject)
-        localStorage.setItem("users", JSON.stringify(allItems))
-        itemName.value = ""
-        price.value = ""
-        imgAddress.value = ""
-        Category.value = ""
-        console.log(allItems)
+         }
         displayItem()
         }
 
        
-    // let update = (index) => {
-    //    let name = prompt("Enter the new name")
-    //    let cat = prompt("Enter the new name")
-    //    let price = prompt("Enter the new name")
+    let update = (index) => {
+       let name = prompt("Enter the new name")
+       let cat = prompt("Enter the new Category")
+       let price = prompt("Enter the new Price")
+       let img = prompt("Enter the new Image Address")
 
-    //    const newObj = {
-    //       name, cat, price
-    //    }
-    // }
+      
 
-    modalOne.innerHTML = `
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <input type="text" id="itemName" class="form-control mt-3 fs-4" placeholder="Item name">
-        <input type="number" id="price" class="form-control mt-3 fs-4" placeholder="Item Price">
-        <input type="text" id="imgAddress" class="form-control mt-3 fs-4" placeholder="Item image address">
-        <input type="text" id="Category" class="form-control mt-3 fs-4" placeholder="Item Category">
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div>
-    `
+       const newItems = allItems.map((item, ind)=>{
+            if (index === ind){
+              return {...item, name : name, price: price, category : cat, itemImage : img}
+            }
+            return item
+       })
+        allItems = [...newItems]
+        localStorage.setItem("users", JSON.stringify(allItems))
+         displayItem()
+        
+    }
+
+  
+
 
 
     let deleteItem = (index) => {
@@ -104,14 +97,13 @@
                 <p class="card-text text-center fs-5 text-success">$${item.price}</p>
                 </div>
                 <ul class="list-group list-group-flush">
-                <button  data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-primary mx-3 mb-3 mt-3 ">Update</button>
+                <button onclick= "update(${index})" class="btn btn-primary mx-3 mb-3 mt-3 ">Update</button>
                 <button onclick="deleteItem(${index})" class="btn btn-danger mx-3 mb-3">Delete</button>
          </ul>
         </div>
         </div>
               `
 
-           
           })
      }
         
